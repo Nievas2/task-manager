@@ -12,7 +12,13 @@ export function Draggable(props: { children: React.ReactNode; id: string }) {
     : undefined
 
   return (
-    <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <button
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      className="w-full bg-gray-800"
+    >
       {props.children}
     </button>
   )

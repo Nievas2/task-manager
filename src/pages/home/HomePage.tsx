@@ -1,23 +1,42 @@
 import { Draggable } from "@/components/shared/Draggable"
 import { Droppable } from "@/components/shared/Droppable"
-import { useDndContext } from "@/context/dnd-context"
+import {  useDndContext } from "@/context/dnd-context"
+
+const containers = ["1", "2", "3"]
+const draggables = ["a", "b", "c"]
 
 const HomePage = () => {
-  const containers = ["A", "B", "C"]
-  const { parent } = useDndContext()
-  const draggableMarkup = <Draggable id="draggable">Drag me</Draggable>
+  const dnd = useDndContext()
+
+  // Draggables que no están en ningún droppable
+  const unassigned = draggables.filter(
+    (dragId) => !containers.some((cid) => dnd.containers[cid]?.includes(dragId))
+  )
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
-      {parent === null ? draggableMarkup : null}
-
-      {containers.map((id) => (
-        // We updated the Droppable component so it would accept an `id`
-        // prop and pass it to `useDroppable`
-        <Droppable key={id} id={id}>
-          {parent === id ? draggableMarkup : "Drop here"}
-        </Droppable>
+    <main className="flex flex-col w-full min-h-screen">
+      {unassigned.map((dragId) => (
+        <Draggable key={dragId} id={dragId}>
+          Drag {dragId}
+        </Draggable>
       ))}
+      <section className="flex gap-3 items-start justify-start p-4 w-full overflow-x-auto">
+        {containers.map((id) => (
+          <div key={id} className="flex-shrink-0">
+            <Droppable id={id}>
+              {dnd.containers[id].map((dragId) => (
+                <Draggable key={dragId} id={dragId}>
+                  Drag {dragId}
+                </Draggable>
+              ))}
+              {dnd.containers[id].length === 0 && ""}
+            </Droppable>
+          </div>
+        ))}
+        <button >
+          <span className="text-sm text-gray-500">+ Agregar una columna</span>
+        </button>
+      </section>
     </main>
   )
 }
