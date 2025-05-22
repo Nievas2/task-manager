@@ -118,3 +118,32 @@
     @apply bg-background text-foreground;
   }
 }
+
+.not-selectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #1e2939 #e5e7eb;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #1e2939;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
