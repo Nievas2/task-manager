@@ -1,21 +1,9 @@
-import { DndContext, type DragEndEvent } from "@dnd-kit/core"
 import { BrowserRouter } from "react-router-dom"
-import { DndContextProvider, useDndContext } from "../context/dnd-context"
-
-function DndContextWrapper({ children }: { children: React.ReactNode }) {
-  const { moveToContainer } = useDndContext()
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event
-    moveToContainer(active.id as string, over ? (over.id as string) : null)
-  }
-  return <DndContext onDragEnd={handleDragEnd}>{children}</DndContext>
-}
+import { DndAppProvider } from "../context/dnd-context"
 
 const Contexts = ({ children }: { children: React.ReactNode }) => (
-  <DndContextProvider>
-    <BrowserRouter>
-      <DndContextWrapper>{children}</DndContextWrapper>
-    </BrowserRouter>
-  </DndContextProvider>
+  <BrowserRouter>
+    <DndAppProvider>{children}</DndAppProvider>
+  </BrowserRouter>
 )
 export default Contexts
